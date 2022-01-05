@@ -118,16 +118,11 @@ public class CellRendererFilme extends CellRendererBaseWithStart {
                         origIcon.ifPresent(icon -> {
                             setHorizontalAlignment(SwingConstants.CENTER);
                             setText("");
-                            Dimension targetDim = new Dimension();
-                            targetDim.height = table.getRowHeight(row);
-                            targetDim.width = table.getColumnModel().getColumn(columnModelIndex).getWidth();
-                            targetDim.height -= 4;
-                            targetDim.width -= 4;
+                            Dimension targetDim = getSenderCellDimension(table, row,columnModelIndex);
 
                             Dimension iconDim = new Dimension(icon.getIconWidth(), icon.getIconHeight());
                             var scaleDim = getScaledDimension(iconDim, targetDim);
-                            Image image = icon.getImage();
-                            Image newimg = image.getScaledInstance(scaleDim.width, scaleDim.height,  Image.SCALE_SMOOTH);
+                            Image newimg = icon.getImage().getScaledInstance(scaleDim.width, scaleDim.height,  Image.SCALE_SMOOTH);
                             setIcon(new ImageIcon(newimg));
                         });
                     }
@@ -147,6 +142,15 @@ public class CellRendererFilme extends CellRendererBaseWithStart {
         }
 
         return this;
+    }
+
+    private Dimension getSenderCellDimension(@NotNull JTable table, int row, int columnModelIndex) {
+        Dimension targetDim = new Dimension();
+        targetDim.height = table.getRowHeight(row);
+        targetDim.width = table.getColumnModel().getColumn(columnModelIndex).getWidth();
+        targetDim.height -= 4;
+        targetDim.width -= 4;
+        return targetDim;
     }
 
     Dimension getScaledDimension(Dimension imageSize, Dimension boundary) {
