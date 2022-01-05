@@ -67,9 +67,8 @@ class SenderIconCacheLoader extends CacheLoader<String, Optional<ImageIcon>> {
                  ResponseBody body = response.body()) {
                 if (response.isSuccessful() && body != null) {
                     BufferedImage b_img = ImageIO.read(body.byteStream());
-                    icon = scaleImage(b_img, iconSize);
-                } else
-                    icon = null;
+                    icon = new ImageIcon(b_img);
+                }
             } catch (Exception ex) {
                 icon = null;
             }

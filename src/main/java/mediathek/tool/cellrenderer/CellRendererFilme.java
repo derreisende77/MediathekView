@@ -8,6 +8,7 @@ import mediathek.controller.history.SeenHistoryController;
 import mediathek.controller.starter.Start;
 import mediathek.daten.DatenDownload;
 import mediathek.daten.DatenFilm;
+import mediathek.tool.sender_icon_cache.MVSenderIconCache;
 import mediathek.tool.table.MVTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -113,7 +114,22 @@ public class CellRendererFilme extends CellRendererBaseWithStart {
                     
                 case DatenFilm.FILM_SENDER:
                     if (mvTable.showSenderIcons()) {
-                        setSenderIcon(value.toString(), mvTable.useSmallSenderIcons);
+                        var origIcon = MVSenderIconCache.get(value.toString(), mvTable.useSmallSenderIcons);
+                        origIcon.ifPresent(icon -> {
+                            setHorizontalAlignment(SwingConstants.CENTER);
+                            setText("");
+                            Dimension targetDim = new Dimension();
+                            targetDim.height = table.getRowHeight(row);
+                            targetDim.width = table.getColumnModel().getColumn(columnModelIndex).getWidth();
+                            targetDim.height -= 2;
+                            targetDim.width -= 2;
+
+                            Dimension iconDim = new Dimension(icon.getIconWidth(), icon.getIconHeight());
+                            var scaleDim = getScaledDimension(iconDim, targetDim);
+                            Image image = icon.getImage();
+                            Image newimg = image.getScaledInstance(scaleDim.width, scaleDim.height,  Image.SCALE_SMOOTH);
+                            setIcon(new ImageIcon(newimg));
+                        });
                     }
                     break;
 
@@ -131,6 +147,16 @@ public class CellRendererFilme extends CellRendererBaseWithStart {
         }
 
         return this;
+    }
+
+    Dimension getScaledDimension(Dimension imageSize, Dimension boundary) {
+
+        double widthRatio = boundary.getWidth() / imageSize.getWidth();
+        double heightRatio = boundary.getHeight() / imageSize.getHeight();
+        double ratio = Math.min(widthRatio, heightRatio);
+
+        return new Dimension((int) (imageSize.width  * ratio),
+                (int) (imageSize.height * ratio));
     }
 
     /**
