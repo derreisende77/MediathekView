@@ -121,8 +121,8 @@ public class CellRendererFilme extends CellRendererBaseWithStart {
                             Dimension targetDim = new Dimension();
                             targetDim.height = table.getRowHeight(row);
                             targetDim.width = table.getColumnModel().getColumn(columnModelIndex).getWidth();
-                            targetDim.height -= 2;
-                            targetDim.width -= 2;
+                            targetDim.height -= 4;
+                            targetDim.width -= 4;
 
                             Dimension iconDim = new Dimension(icon.getIconWidth(), icon.getIconHeight());
                             var scaleDim = getScaledDimension(iconDim, targetDim);
