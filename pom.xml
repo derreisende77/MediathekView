@@ -157,6 +157,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.lukeu</groupId>
+            <artifactId>swing-dpi</artifactId>
+            <version>0.10</version>
+        </dependency>
+
+        <dependency>
             <groupId>es.blackleg</groupId>
             <artifactId>jlibnotify</artifactId>
             <version>0.2.0</version>

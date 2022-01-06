@@ -1,6 +1,8 @@
 package mediathek.tool.cellrenderer;
 
+import com.github.swingdpi.util.ScaledIcon;
 import mediathek.tool.sender_icon_cache.MVSenderIconCache;
+import org.apache.commons.lang3.SystemUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -23,9 +25,18 @@ public class CellRendererBase extends DefaultTableCellRenderer {
             setHorizontalAlignment(SwingConstants.CENTER);
             setText("");
             Dimension iconDim = new Dimension(icon.getIconWidth(), icon.getIconHeight());
-            var scaleDim = getScaledDimension(iconDim, targetDim);
-            Image newimg = icon.getImage().getScaledInstance(scaleDim.width, scaleDim.height, Image.SCALE_SMOOTH);
-            setIcon(new ImageIcon(newimg));
+            if (SystemUtils.IS_OS_WINDOWS) {
+                double widthRatio = targetDim.getWidth() / iconDim.getWidth();
+                double heightRatio = targetDim.getHeight() / iconDim.getHeight();
+                double ratio = Math.min(widthRatio, heightRatio);
+                var scIcon = new ScaledIcon(icon,(float)ratio);
+                setIcon(scIcon);
+            }
+            else {
+                var scaleDim = getScaledDimension(iconDim, targetDim);
+                Image newimg = icon.getImage().getScaledInstance(scaleDim.width, scaleDim.height, Image.SCALE_SMOOTH);
+                setIcon(new ImageIcon(newimg));
+            }
         });
     }
 
