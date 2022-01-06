@@ -187,6 +187,11 @@ public class Main {
         //don´t set L&F on macOS...
         if (!SystemUtils.IS_OS_MAC_OSX)
             FlatLightLaf.setup();
+        else {
+            // install by default for M1 macs...
+            if (SystemUtils.OS_ARCH.equals("aarch64"))
+                FlatLightLaf.setup();
+        }
     }
 
     private static void setupEnvironmentProperties() {
