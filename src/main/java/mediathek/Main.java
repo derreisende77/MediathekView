@@ -1,5 +1,6 @@
 package mediathek;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import com.google.common.base.Stopwatch;
 import com.sun.jna.platform.win32.VersionHelpers;
 import javafx.application.Platform;
@@ -213,22 +214,27 @@ public class Main {
         if (SystemUtils.IS_OS_MAC_OSX)
             return;
 
-        final String laf = System.getProperty("swing.defaultlaf");
-        if (laf == null || laf.isEmpty()) {
-            //only set L&F if there was no define on CLI
-            logger.trace("L&F property is empty, setting L&F");
-            //use system for windows and macOS
-            String systemLaF = UIManager.getSystemLookAndFeelClassName();
-            //on linux, use more modern Nimbus L&F...
-            if (SystemUtils.IS_OS_LINUX) {
-                systemLaF = queryNimbusLaFName();
-            }
+        if (SystemUtils.IS_OS_WINDOWS) {
+            FlatLightLaf.setup();
+        }
+        else {
+            final String laf = System.getProperty("swing.defaultlaf");
+            if (laf == null || laf.isEmpty()) {
+                //only set L&F if there was no define on CLI
+                logger.trace("L&F property is empty, setting L&F");
+                //use system for windows and macOS
+                String systemLaF = UIManager.getSystemLookAndFeelClassName();
+                //on linux, use more modern Nimbus L&F...
+                if (SystemUtils.IS_OS_LINUX) {
+                    systemLaF = queryNimbusLaFName();
+                }
 
-            //set the L&F...
-            try {
-                UIManager.setLookAndFeel(systemLaF);
-            } catch (IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException | ClassNotFoundException e) {
-                logger.error("L&F error: ", e);
+                //set the L&F...
+                try {
+                    UIManager.setLookAndFeel(systemLaF);
+                } catch (IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException | ClassNotFoundException e) {
+                    logger.error("L&F error: ", e);
+                }
             }
         }
     }
