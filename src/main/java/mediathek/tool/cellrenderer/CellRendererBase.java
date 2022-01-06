@@ -27,6 +27,7 @@ public class CellRendererBase extends DefaultTableCellRenderer {
             Dimension iconDim = new Dimension(icon.getIconWidth(), icon.getIconHeight());
             var scaleDim = getScaledDimension(iconDim, targetDim);
             Icon imgIcon;
+            //Of course Windows is again the only OS which sucks at automatic scaling...
             if (SystemUtils.IS_OS_WINDOWS) {
                 imgIcon = new ScaledImageIcon(new ImageIcon(icon.getImage()), scaleDim.width, scaleDim.height);
             }
