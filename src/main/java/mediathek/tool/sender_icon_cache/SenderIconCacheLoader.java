@@ -37,16 +37,6 @@ class SenderIconCacheLoader extends CacheLoader<String, Optional<ImageIcon>> {
         return new ImageIcon(image.getScaledInstance(newWidth, maxHeight, Image.SCALE_SMOOTH));
     }
 
-    private ImageIcon scaleImage(@NotNull BufferedImage b_img, SenderIconSize iconSize) {
-        final int maxHeight = iconSize.getHeight();
-        final float priorHeight = (float) b_img.getHeight();
-        final float priorWidth = (float) b_img.getWidth();
-        final int newWidth = Math.round(((priorWidth / priorHeight) * (float) maxHeight));
-        final Image scaledImage = b_img.getScaledInstance(newWidth, maxHeight, Image.SCALE_SMOOTH);
-
-        return new ImageIcon(scaledImage);
-    }
-
     /**
      * Download an icon from network or use local resourcec
      *
