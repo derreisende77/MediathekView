@@ -8,7 +8,6 @@ import mediathek.controller.history.SeenHistoryController;
 import mediathek.controller.starter.Start;
 import mediathek.daten.DatenDownload;
 import mediathek.daten.DatenFilm;
-import mediathek.tool.sender_icon_cache.MVSenderIconCache;
 import mediathek.tool.table.MVTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -114,17 +113,8 @@ public class CellRendererFilme extends CellRendererBaseWithStart {
                     
                 case DatenFilm.FILM_SENDER:
                     if (mvTable.showSenderIcons()) {
-                        var origIcon = MVSenderIconCache.get(value.toString(), mvTable.useSmallSenderIcons);
-                        origIcon.ifPresent(icon -> {
-                            setHorizontalAlignment(SwingConstants.CENTER);
-                            setText("");
-                            Dimension targetDim = getSenderCellDimension(table, row,columnModelIndex);
-
-                            Dimension iconDim = new Dimension(icon.getIconWidth(), icon.getIconHeight());
-                            var scaleDim = getScaledDimension(iconDim, targetDim);
-                            Image newimg = icon.getImage().getScaledInstance(scaleDim.width, scaleDim.height,  Image.SCALE_SMOOTH);
-                            setIcon(new ImageIcon(newimg));
-                        });
+                        Dimension targetDim = getSenderCellDimension(table, row,columnModelIndex);
+                        setSenderIcon(value.toString(), mvTable.useSmallSenderIcons, targetDim);
                     }
                     break;
 
@@ -142,25 +132,6 @@ public class CellRendererFilme extends CellRendererBaseWithStart {
         }
 
         return this;
-    }
-
-    private Dimension getSenderCellDimension(@NotNull JTable table, int row, int columnModelIndex) {
-        Dimension targetDim = new Dimension();
-        targetDim.height = table.getRowHeight(row);
-        targetDim.width = table.getColumnModel().getColumn(columnModelIndex).getWidth();
-        targetDim.height -= 4;
-        targetDim.width -= 4;
-        return targetDim;
-    }
-
-    Dimension getScaledDimension(Dimension imageSize, Dimension boundary) {
-
-        double widthRatio = boundary.getWidth() / imageSize.getWidth();
-        double heightRatio = boundary.getHeight() / imageSize.getHeight();
-        double ratio = Math.min(widthRatio, heightRatio);
-
-        return new Dimension((int) (imageSize.width  * ratio),
-                (int) (imageSize.height * ratio));
     }
 
     /**
