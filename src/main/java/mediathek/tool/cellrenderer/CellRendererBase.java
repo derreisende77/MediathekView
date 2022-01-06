@@ -16,9 +16,9 @@ public class CellRendererBase extends DefaultTableCellRenderer {
      *
      * @param sender Name of the sender.
      */
-    protected void setSenderIcon(@NotNull String sender, boolean useSmallIcon, @NotNull Dimension targetDim) {
+    protected void setSenderIcon(@NotNull String sender, @NotNull Dimension targetDim) {
         setHorizontalAlignment(SwingConstants.CENTER);
-        var origIcon = MVSenderIconCache.get(sender, useSmallIcon);
+        var origIcon = MVSenderIconCache.get(sender);
         origIcon.ifPresent(icon -> {
             setHorizontalAlignment(SwingConstants.CENTER);
             setText("");

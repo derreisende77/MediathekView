@@ -192,7 +192,7 @@ public class CellRendererDownloads extends CellRendererBaseWithStart {
                     if (((MVTable) table).showSenderIcons()) {
                         Dimension targetDim = getSenderCellDimension(table, row, columnModelIndex);
                         var useSmallIcon = ((MVTable) table).useSmallSenderIcons;
-                        setSenderIcon(value.toString(), useSmallIcon, targetDim);
+                        setSenderIcon(value.toString(), targetDim);
                     }
                     break;
             }
