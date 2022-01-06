@@ -157,9 +157,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.lukeu</groupId>
-            <artifactId>swing-dpi</artifactId>
-            <version>0.10</version>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>2.0-rc1</version>
         </dependency>
 
         <dependency>
