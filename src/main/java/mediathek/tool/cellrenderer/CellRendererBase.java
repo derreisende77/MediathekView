@@ -29,6 +29,13 @@ public class CellRendererBase extends DefaultTableCellRenderer {
         });
     }
 
+    /**
+     * Calculate the dimensions of a table cell for the sender icon.
+     * @param table where it will be displayed.
+     * @param row the used row index.
+     * @param columnModelIndex the used column index.
+     * @return the calculated dimension of the available table cell.
+     */
     protected Dimension getSenderCellDimension(@NotNull JTable table, int row, int columnModelIndex) {
         Dimension targetDim = new Dimension();
         targetDim.height = table.getRowHeight(row);
@@ -38,7 +45,13 @@ public class CellRendererBase extends DefaultTableCellRenderer {
         return targetDim;
     }
 
-    protected Dimension getScaledDimension(Dimension imageSize, Dimension boundary) {
+    /**
+     * Calculate the target dimensions based on image size and a boundary.
+     * @param imageSize the size of the original image.
+     * @param boundary the boundary size.
+     * @return the target boundary while maintaining aspect ratio.
+     */
+    protected Dimension getScaledDimension(@NotNull Dimension imageSize, @NotNull Dimension boundary) {
 
         double widthRatio = boundary.getWidth() / imageSize.getWidth();
         double heightRatio = boundary.getHeight() / imageSize.getHeight();
