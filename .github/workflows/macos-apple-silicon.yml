@@ -22,7 +22,7 @@ jobs:
         run: |
           curl -L -o install4j.dmg https://download.ej-technologies.com/install4j/install4j_macos_11_0_4.dmg
           hdiutil attach install4j.dmg
-          sudo /Volumes/install4j*/install4j*.app/Contents/MacOS/install4jInstaller.app/Contents/MacOS/JavaApplicationStub -q
+          cp -r /Volumes/install4j/install4j.app /Applications/install4j.app
           hdiutil detach /Volumes/install4j*
 
       - name: Build macOS app
