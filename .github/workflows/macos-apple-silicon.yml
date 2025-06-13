@@ -1,8 +1,6 @@
 name: Build MV preview for Apple Silicon macOS
 
-on:
-  push:
-    branches: [ "develop" ]
+on: workflow_dispatch
 
 jobs:
   build:
