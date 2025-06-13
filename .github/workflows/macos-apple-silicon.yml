@@ -15,8 +15,10 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'liberica'
           java-version: '24'
+          java-package: jdk
+          cache: 'maven'
 
       - name: Install install4j
         run: |
